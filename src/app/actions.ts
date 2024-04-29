@@ -7,15 +7,12 @@ export type ModerationResults =
   | { moderation: OpenAI.Moderations.Moderation }
   | { error: string };
 
-export async function checkPost(post: string): Promise<ModerationResults> {
-  if (!currentLogger) {
-    // TODO: What's the proper way to initialize the logger?
-    initLogger({
-      projectName: "AI-Moderator",
-      apiKey: process.env.BRAINTRUST_API_KEY,
-    });
-  }
+initLogger({
+  projectName: "AI-Moderator",
+  apiKey: process.env.BRAINTRUST_API_KEY,
+});
 
+export async function checkPost(post: string): Promise<ModerationResults> {
   // TODO: Attempting to wrap the OpenAI object to add tracing
   // No logs are displayed on the BrainTrust dashboard
   const openai = wrapOpenAI(
